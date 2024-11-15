@@ -138,7 +138,9 @@
                                                     <select id="yAxis" class="form-select"></select>
                                                 </div>
                                             </div>
-                                            <canvas id="chartCanvas" width="500" height="300"></canvas>
+                                            <div style="max-width: 700px; margin: auto;">
+                                            <canvas id="chartCanvas"></canvas>
+                                        </div>
 
                                         </div>
 
@@ -189,6 +191,15 @@
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 
+    <style>
+        #chartCanvas {
+    width: 100% !important;
+    height: auto !important;
+    max-width: 100%; /* Evita que el gráfico exceda el contenedor */
+    display: block; /* Soluciona problemas con el centrado */
+}
+
+    </style>
     <script>
         $(document).ready(function() {
             $('#dataTableHead').DataTable();
@@ -198,7 +209,7 @@
 
 
 
-    <script>
+<script>
         document.addEventListener("DOMContentLoaded", function() {
             const field1 = document.getElementById("field1");
             const field2 = document.getElementById("field2");
@@ -252,3 +263,133 @@
             loadColumns();
         });
     </script>
+
+
+
+<!-- GRAFICOS -->
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+    let chart; // Variable para almacenar el gráfico
+    const chartTypeSelect = document.getElementById("chartType");
+    const xAxisSelect = document.getElementById("xAxis");
+    const yAxisSelect = document.getElementById("yAxis");
+    const chartCanvas = document.getElementById("chartCanvas").getContext("2d");
+    const loadingMessage = document.getElementById("loadingMessage");
+
+    // Datos iniciales que se actualizarán al cargar el archivo
+    const columnData = { columns: [], data: [] };
+
+    // Define una paleta de colores para los diferentes datos
+    const colors = [
+        "rgba(255, 99, 132, 0.2)",  // Rojo
+        "rgba(54, 162, 235, 0.2)",  // Azul
+        "rgba(255, 206, 86, 0.2)",  // Amarillo
+        "rgba(75, 192, 192, 0.2)",  // Verde
+        "rgba(153, 102, 255, 0.2)", // Púrpura
+        "rgba(255, 159, 64, 0.2)"   // Naranja
+    ];
+    const borderColors = [
+        "rgba(255, 99, 132, 1)",
+        "rgba(54, 162, 235, 1)",
+        "rgba(255, 206, 86, 1)",
+        "rgba(75, 192, 192, 1)",
+        "rgba(153, 102, 255, 1)",
+        "rgba(255, 159, 64, 1)"
+    ];
+
+    function generateChart() {
+        if (chart) chart.destroy(); // Destruye el gráfico anterior si existe
+
+        const xAxis = xAxisSelect.value;
+        const yAxis = yAxisSelect.value;
+        const chartType = chartTypeSelect.value;
+
+        const labels = columnData.data.map(row => row[xAxis]);
+        const data = columnData.data.map(row => parseFloat(row[yAxis]) || row[yAxis]);
+
+        // Imprime los datos en la consola para depuración
+        console.log("Datos del eje X:", labels);
+        console.log("Datos del eje Y:", data);
+
+        const backgroundColor = data.map((_, index) => colors[index % colors.length]);
+        const borderColor = data.map((_, index) => borderColors[index % borderColors.length]);
+
+        chart = new Chart(chartCanvas, {
+            type: chartType,
+            data: {
+                labels: labels,
+                datasets: [{
+                    label: yAxis,
+                    data: data,
+                    backgroundColor: backgroundColor,
+                    borderColor: borderColor,
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                responsive: true, // Hace que el gráfico se ajuste al contenedor
+                maintainAspectRatio: true, // Mantiene la relación de aspecto del gráfico
+                plugins: {
+                    legend: { display: true }, // Muestra la leyenda
+                    tooltip: { enabled: true } // Activa los tooltips
+                },
+                scales: {
+                    y: {
+                        beginAtZero: true // Empieza en 0 para mejor visualización
+                    }
+                }
+            }
+        });
+    }
+
+    // Eventos para actualizar el gráfico dinámicamente
+    if (chartTypeSelect && xAxisSelect && yAxisSelect) {
+        chartTypeSelect.addEventListener("change", generateChart);
+        xAxisSelect.addEventListener("change", generateChart);
+        yAxisSelect.addEventListener("change", generateChart);
+    } else {
+        console.error("Error: Uno o más elementos select no se encuentran en el DOM.");
+    }
+
+    // Función para manejar la carga del archivo
+    document.getElementById("uploadForm").addEventListener("submit", async function (event) {
+        event.preventDefault();
+        loadingMessage.style.display = "block"; // Muestra el mensaje de carga
+
+        const formData = new FormData(this);
+        try {
+            const response = await fetch("upload.php", { method: "POST", body: formData });
+            const result = await response.json();
+
+            console.log("Datos recibidos del servidor:", result);
+
+            if (result.columns && result.data) {
+                xAxisSelect.innerHTML = "";
+                yAxisSelect.innerHTML = "";
+
+                result.columns.forEach(col => {
+                    const optionX = new Option(col, col);
+                    const optionY = new Option(col, col);
+                    xAxisSelect.add(optionX);
+                    yAxisSelect.add(optionY);
+                    console.log("Columna añadida:", col);
+                });
+
+                columnData.columns = result.columns;
+                columnData.data = result.data;
+
+                alert("Archivo cargado exitosamente.");
+                generateChart();
+            } else {
+                alert(result.message || "Error al cargar el archivo.");
+            }
+        } catch (error) {
+            console.error("Error durante la carga del archivo:", error);
+            alert("Hubo un error al cargar el archivo. Inténtalo de nuevo.");
+        } finally {
+            loadingMessage.style.display = "none"; // Oculta el mensaje de carga
+        }
+    });
+});
+
+</script>
