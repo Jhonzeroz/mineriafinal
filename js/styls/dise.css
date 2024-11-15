@@ -1,0 +1,202 @@
+.small-card {
+    border-radius: 10px;
+    padding: 0px;
+    transition: transform 0.2s, box-shadow 0.2s;
+    border: none;
+    font-size: 0.9rem;
+}
+
+.small-card:hover {
+    transform: scale(1.03);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+.small-card .card-title {
+    font-weight: bold;
+    color: #333;
+    font-size: 1rem;
+    margin-bottom: 0.5rem;
+}
+.small-card .card-text {
+    font-size: 1.2rem;
+    color: #007bff;
+    margin: 0;
+    word-break: break-all;
+}
+@media (max-width: 576px) {
+    .small-card .card-title {
+        font-size: 0.9rem;
+    }
+    .small-card .card-text {
+        font-size: 1rem;
+    }
+}
+
+/*//////////////////////////////////////////////////////////////*/
+
+ .card {
+    border-radius: 12px; 
+    transition: transform 0.3s, box-shadow 0.3s; 
+    border: none;
+}
+
+.card:hover {
+    transform: scale(1.05);
+    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.15); 
+}
+
+
+.card-title {
+    font-weight: bold;
+    color: #555;
+    font-size: 1.2rem;
+    margin-bottom: 0.5rem;
+}
+
+
+.card-text {
+    font-size: 2.5rem;
+    color: #007bff;
+}
+
+
+.card.shadow-sm {
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); 
+}
+
+
+@media (max-width: 576px) {
+    .card-text {
+        font-size: 2rem; 
+    }
+    .card-title {
+        font-size: 1rem; 
+    }
+}
+
+/*//////////////////////////////////////////////////////////////*/
+
+#TabladeContingencia {
+    width: 100%;
+    text-align: center;
+}
+
+#TabladeContingencia th {
+    background-color: #007bff;
+    color: white;
+    font-weight: bold;
+    text-transform: uppercase;
+}
+
+#TabladeContingencia td {
+    vertical-align: middle;
+}
+
+#TabladeContingencia tbody tr:hover {
+    background-color: rgba(0, 123, 255, 0.1);
+}
+
+/*//////////////////////////////////////////////////////////////*/
+ 
+  .styled-table {
+    width: 100%;
+    text-align: center;
+    border-collapse: collapse;
+}
+
+.styled-table th {
+    background-color: #007bff;
+    color: white;
+    font-weight: bold;
+    text-transform: uppercase;
+    padding: 8px;
+}
+
+.styled-table td {
+    padding: 8px;
+    vertical-align: middle;
+}
+
+
+.styled-table tbody tr:hover {
+    background-color: rgba(0, 123, 255, 0.1);
+}
+
+.styled-table, .styled-table th, .styled-table td {
+    border: 1px solid #ddd;
+}
+
+
+
+.table {
+    font-family: 'Arial', sans-serif;
+    font-size: 14px;
+}
+
+.table-hover tbody tr:hover {
+    background-color: #f2f2f2;
+}
+
+.table-dark th {
+    background-color: #343a40;
+    color: white;
+}
+
+.table-bordered th, .table-bordered td {
+    border: 1px solid #dee2e6;
+}
+
+.card-title {
+    color: #343a40;
+    font-weight: bold;
+}
+
+.card-body {
+    background-color: #f8f9fa;
+    border-radius: 8px;
+}
+
+
+
+#chartCanvas {
+    max-width: 100%;
+    width: 400px;  /* Ajusta el ancho deseado */
+    height: 300px; /* Ajusta la altura deseada */
+    margin: 0 auto; /* Centra el gráfico */
+}
+
+.chart-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+    background-color: #f8f9fa;
+    border-radius: 8px;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+#basicInfoContent {
+    overflow-x: auto; /* Permite el desplazamiento horizontal si la tabla es más ancha que el contenedor */
+}
+
+#basicInfoContent table {
+    width: 100%; /* Hace que la tabla ocupe el 100% del ancho del contenedor */
+    max-width: 100%; /* Asegura que la tabla no exceda el tamaño del contenedor */
+    border-collapse: collapse; /* Colapsa los bordes de la tabla para un diseño más limpio */
+}
+
+#basicInfoContent th, #basicInfoContent td {
+    padding: 8px;
+    text-align: left;
+    border: 1px solid #ddd; /* Agrega un borde claro alrededor de las celdas */
+}
+
+/* Opcional: Estilo para encabezados */
+#basicInfoContent th {
+    background-color: #343a40;
+    color: white;
+}
+
+/* Opcional: Efecto hover en las filas */
+#basicInfoContent tr:hover {
+    background-color: #f2f2f2;
+}
