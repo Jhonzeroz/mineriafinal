@@ -1,3 +1,4 @@
+
 <link rel="stylesheet" href="plugins/datatables-bs4/css/dataTables.bootstrap4.min.css">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
 <link rel="stylesheet" href="js/styls/dise.css">
@@ -24,7 +25,7 @@
         <div class="card-body">
             <input style="background-color:transparent; display:none;" type="date" size="5" class="form-control form-control-sm invoice-edit-input date-picker" name="cmbhasta6" id="cmbhasta6" value="<?php echo date("Y-m-d"); ?>">
             <input style="background-color:transparent; display:none;" type="date" size="5" class="form-control form-control-sm invoice-edit-input date-picker" name="cmbdesde6" id="cmbdesde6" value="2022-08-01">
-            <p class="card-text font-small-3">Facturación del Día</p>
+            <p class="card-text font-small-3">Selecione el archivo a analizar</p>
             <!-- Formulario para cargar archivo -->
             <form id="uploadForm" method="POST" action="upload.php" enctype="multipart/form-data" class="mb-4">
                 <div class="input-group">
@@ -173,6 +174,9 @@
         </div>
     </div>
     </div>
+<footer style="background-color: #f8f9fa; text-align: center; padding: 10px; position: relative; bottom: 0; width: 100%; border-top: 1px solid #dee2e6;">
+    <p style="margin: 0; font-size: 14px; color: #6c757d;">&copy; <?php echo date("Y"); ?> Parcial Minería - Cul.</p>
+</footer>
 
 
     <script src="js/styls/funciones_ok.js"></script>
